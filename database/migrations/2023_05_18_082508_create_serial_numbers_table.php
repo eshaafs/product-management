@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('prod_date');
             $table->date('waranty_start');
             $table->string('waranty_duration');
-            $table->boolean('used');
+            $table->boolean('used')->default(false);
             $table->double('price', 15, 2);
             $table->timestamps();
         });

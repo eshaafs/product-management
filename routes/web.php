@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -24,3 +25,4 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
+Route::resource('/dashboard/products', DashboardProductController::class)->middleware('auth');

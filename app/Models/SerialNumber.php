@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SerialNumber extends Model
 {
@@ -11,6 +13,7 @@ class SerialNumber extends Model
 
     protected $fillable = [
         'serial_number',
+        'product_id',
         'prod_date',
         'waranty_start',
         'waranty_duration',
@@ -18,4 +21,9 @@ class SerialNumber extends Model
         'price',
         'image'
     ];
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

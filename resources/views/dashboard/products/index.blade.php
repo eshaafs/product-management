@@ -1,4 +1,7 @@
 @extends('dashboard.layout.main')
+@php
+    use Akaunting\Money\Money;
+@endphp
 
 @section('container')
 
@@ -15,18 +18,24 @@
         <th scope="col">Brand</th>
         <th scope="col">Model Number</th>
         <th scope="col">Price</th>
+        <th scope="col">Total Stock</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
+      @foreach ($products as $product)
       <tr>
-        <td>1,001</td>
-        <td>random</td>
-        <td>data</td>
-        <td>placeholder</td>
-        <td>text</td>
-        <td>text</td>
+        <td>{{ $loop->iteration }}</td>
+        <td>{{ $product->product_name }}</td>
+        <td>{{ $product->brand }}</td>
+        <td>{{ $product->model_number }}</td>
+        <td>{{ Money::IDR($product->price, true) }}</td>
+        <td>{{ $stocks->where('product_id', $product->id)->count() }}</td>
+        <td>
+          <a href="/dashboard/products/{{ $product->model_number }}" class='badge bg-info'><span data-feather="eye" class="align-text-bottom"></span></a>
+        </td>
       </tr>
+      @endforeach
     </tbody>
   </table>
 </div>

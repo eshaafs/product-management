@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\SerialNumber;
 use Illuminate\Http\Request;
 
 class DashboardProductController extends Controller
@@ -12,7 +13,11 @@ class DashboardProductController extends Controller
      */
     public function index()
     {
-        return view('dashboard.products.index');
+        return view('dashboard.products.index', [
+            'products' => Product::all(),
+            'stocks' => SerialNumber::where('used',false)->get(),
+            'active' => 'products'
+        ]);
     }
 
     /**
@@ -36,7 +41,11 @@ class DashboardProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('dashboard.products.show', [
+            'product' => $product,
+            'stocks' => SerialNumber::where('used',false)->where('product_id',$product->id)->get(),
+            'active' => 'products'
+        ]);
     }
 
     /**

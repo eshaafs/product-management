@@ -22,7 +22,7 @@ class SerialNumber extends Model
         'image'
     ];
 
-    public function product(): BelongsTo
+    public function product() : BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

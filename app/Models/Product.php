@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Transaction;
 use App\Models\SerialNumber;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -19,13 +20,18 @@ class Product extends Model
         'image'
     ];
 
-    public function serial_numbers(): HasMany
+    public function serial_numbers() : HasMany
     {
         return $this->hasMany(SerialNumber::class);
     }
     
-    public function transactions(): HasMany
+    public function transactions() : HasMany
     {
-        return $this->hasMany(SerialNumber::class);
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'model_number';
     }
 }

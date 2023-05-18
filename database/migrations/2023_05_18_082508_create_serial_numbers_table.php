@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('serial_numbers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id');
-            $table->string('serial_number');
+            $table->string('serial_number')->unique();
             $table->date('prod_date');
             $table->date('waranty_start');
             $table->string('waranty_duration');

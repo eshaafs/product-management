@@ -10,7 +10,7 @@
 </div>
 <div class="row">
   <div class="col-md-6">
-    <img src="/img/{{ $product->image }}" class="img-thumbnail float-end me-3" style="width:250px; height:250px"alt="{{ $product->brand . ' ' .$product->product_name }}">
+    <img src="/img/{{ $product->image }}" class="img-thumbnail float-end me-3" style="width:250px; height:250px"alt="{{ $product->brand . ' ' . $product->product_name }}">
   </div>
   <div class="col-md-3">
     <table class="table">

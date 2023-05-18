@@ -11,12 +11,12 @@ class DashboardProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         return view('dashboard.products.index', [
             'products' => Product::all(),
-            'stocks' => SerialNumber::where('used',false)->get(),
-            'active' => 'products'
+            'stocks' => SerialNumber::where('used',false)->get()
         ]);
     }
 
@@ -43,8 +43,7 @@ class DashboardProductController extends Controller
     {
         return view('dashboard.products.show', [
             'product' => $product,
-            'stocks' => SerialNumber::where('used',false)->where('product_id',$product->id)->get(),
-            'active' => 'products'
+            'stocks' => SerialNumber::where('used',false)->where('product_id',$product->id)->get()
         ]);
     }
 

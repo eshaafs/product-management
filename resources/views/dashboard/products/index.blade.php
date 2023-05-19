@@ -13,7 +13,7 @@
   <table class="table table-striped table-sm">
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope="col">No</th>
         <th scope="col">Product Name</th>
         <th scope="col">Brand</th>
         <th scope="col">Model Number</th>
@@ -32,7 +32,7 @@
         <td>{{ Money::IDR($product->price, true) }}</td>
         <td>{{ $stocks->where('product_id', $product->id)->count() }}</td>
         <td>
-          <a href="/dashboard/products/{{ $product->model_number }}" class='badge bg-info'><span data-feather="eye" class="align-text-bottom"></span></a>
+          <a href="/dashboard/products/{{ $product->model_number }}" class='badge bg-info text-decoration-none pb-1'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
         </td>
       </tr>
       @endforeach

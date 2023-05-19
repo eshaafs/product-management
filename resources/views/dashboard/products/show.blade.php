@@ -36,6 +36,39 @@
   </div>
 </div>
 
+<h4 class="mt-5 mb-3 pb-2 border-bottom">Stock List</h4>
+
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Serial Number</th>
+        <th scope="col">Production Date</th>
+        <th scope="col">Waranty Start</th>
+        <th scope="col">Waranty Duration</th>
+        <th scope="col">Price</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach ($stocks as $stock)
+      <tr>
+        <td>{{ $loop->iteration }}</td>
+        <td>{{ $stock->serial_number }}</td>
+        <td>{{ $stock->prod_date }}</td>
+        <td>{{ $stock->waranty_start }}</td>
+        <td>{{ $stock->waranty_duration }}</td>
+        <td>{{ Money::IDR($stock->price, true) }}</td>
+        <td>
+          <a href="" class='btn btn-danger'>Sell <span data-feather="send" class="align-text-bottom"></span></span></a>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
 </div>
+
+<a href="/dashboard/products" class="btn btn-dark mt-3"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Product Lists</a>
 
 @endsection

@@ -20,9 +20,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('dashboard/transactions') ? 'active' : ''}}" href="/dashboard/reports">
+          <a class="nav-link {{ Request::is('dashboard/report') ? 'active' : ''}}" href="/dashboard/reports">
             <span data-feather="bar-chart-2" class="align-text-bottom"></span>
-            Reports
+            Report
           </a>
         </li>
       </ul>

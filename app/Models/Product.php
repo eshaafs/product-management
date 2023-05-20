@@ -30,6 +30,11 @@ class Product extends Model
         return $this->hasMany(Transaction::class);
     }
 
+    public function detail_transactions() : HasMany
+    {
+        return $this->hasMany(DetailTransaction::class);
+    }
+
     public function getRouteKeyName(): string
     {
         return 'model_number';

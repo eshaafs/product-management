@@ -24,17 +24,19 @@
     </thead>
     <tbody>
       @foreach ($products as $product)
-      <tr>
-        <td>{{ $loop->iteration }}</td>
-        <td>{{ $product->product_name }}</td>
-        <td>{{ $product->brand }}</td>
-        <td>{{ $product->model_number }}</td>
-        <td>{{ Money::IDR($product->price, true) }}</td>
-        <td>{{ $stocks->where('product_id', $product->id)->count() }}</td>
-        <td>
-          <a href="/products/{{ $product->model_number }}" class='badge bg-dark text-decoration-none p-2'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
-        </td>
-      </tr>
+        @if ($stocks->where('product_id', $product->id)->count() > 0)
+          <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $product->product_name }}</td>
+            <td>{{ $product->brand }}</td>
+            <td>{{ $product->model_number }}</td>
+            <td>{{ Money::IDR($product->price, true) }}</td>
+            <td>{{ $stocks->where('product_id', $product->id)->count() }}</td>
+            <td>
+              <a href="/products/{{ $product->model_number }}" class='badge bg-dark text-decoration-none p-2'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
+            </td>
+          </tr>
+        @endif
       @endforeach
     </tbody>
   </table>

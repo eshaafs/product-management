@@ -64,7 +64,7 @@
         <td>{{ $stock->waranty_duration }}</td>
         <td>{{ Money::IDR($stock->price, true) }}</td>
         <td>
-          <a href="" class='badge bg-danger text-decoration-none p-2'><i class="bi bi-cash-coin"> Sell</i></a>
+          <a href="/transactions/sell?serial_number={{ $stock->serial_number }}" class='badge bg-danger text-decoration-none p-2'><i class="bi bi-cash-coin"> Sell</i></a>
         </td>
       </tr>
       @endforeach
@@ -72,6 +72,6 @@
   </table>
 </div>
 
-<a href="/products" class="btn btn-dark mt-3 float-end"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Product List</a>
+<a href="/products" class="btn btn-dark position-absolute" style="bottom: 5%; right: 5%"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Product List</a>
 
 @endsection

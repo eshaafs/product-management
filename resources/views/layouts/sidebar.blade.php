@@ -19,12 +19,16 @@
             Transactions
           </a>
         </li>
+
+        @can('admin')
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('report') ? 'active' : ''}}" href="/reports">
+          <a class="nav-link {{ Request::is('reports') ? 'active' : ''}}" href="/reports">
             <span data-feather="bar-chart-2" class="align-text-bottom"></span>
-            Report
+            Reports
           </a>
         </li>
+        @endcan
+        
       </ul>
     </div>
   </nav>

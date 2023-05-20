@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Transaction extends Model
 {
@@ -17,8 +18,13 @@ class Transaction extends Model
         'transaction_type'
     ];
 
-    public function product(): BelongsTo
+    public function product(): HasMany
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(DetailTransaction::class);
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'transaction_number';
     }
 }

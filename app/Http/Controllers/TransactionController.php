@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailTransaction;
 use App\Models\Transaction;
 use App\Models\Product;
 use App\Models\SerialNumber;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -15,9 +15,50 @@ class TransactionController extends Controller
         return view('transactions.buy');
     }
 
-    public function sell()
+    public function listSellProduct(){
+        return view ('transactions.listSellProduct', [
+            'products' => Product::all(),
+            'stocks' => SerialNumber::where('used',false)->get()
+        ]);
+    }
+
+    public function sell(Request $request)
     {
-        return view('transactions.sell');
+        return view('transactions.sell',[
+            'stock' => SerialNumber::firstWhere('serial_number', $request->serial_number)
+        ]);
+    }
+
+    public function sellProduct(Request $request){
+        $validatedData = $request->validate([
+            'price' => 'required|numeric',
+            'discount' => 'required|numeric',
+            'customer_or_vendor' => 'required|max:255'
+        ]);
+
+        $product = SerialNumber::firstWhere('serial_number', $request->serial_number);
+        $product->update([$product->used = true]);
+
+        $newTransaction = [
+            'transaction_date' => now(),
+            'transaction_number' => 'SELL' . mt_rand(1,100000),
+            'customer_or_vendor' => $validatedData['customer_or_vendor'],
+            'transaction_type' => 'Sell'
+        ];
+
+        Transaction::create($newTransaction);
+
+        $transactionId = Transaction::where('transaction_number', $newTransaction['transaction_number'])->value('id');
+        $newDetailTransaction = [
+            'transaction_id' => $transactionId,
+            'product_id' => SerialNumber::where('serial_number', $request->serial_number)->value('product_id'),
+            'serial_number' => $request->serial_number,
+            'price' => $validatedData['price'],
+            'discount' => $validatedData['discount']
+        ];
+
+        DetailTransaction::create($newDetailTransaction);
+        return redirect(route('transactions.index'))->with('transaction_status', 'Transaction Success!');
     }
 
     /**
@@ -26,7 +67,7 @@ class TransactionController extends Controller
     public function index()
     {
         return view('transactions.index',[
-            'transactions' => Transaction::all()
+            'transactions' => Transaction::latest()->get()
         ]);
     }
 
@@ -43,7 +84,6 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        // @dd($request);
         $validatedData = $request->validate([
             'product_name' => 'required|max:255',
             'brand' => ['required', 'max:255'],
@@ -53,6 +93,7 @@ class TransactionController extends Controller
             'waranty_start' => 'required|date',
             'waranty_duration' => 'required|max:255',
             'price' => 'required|numeric',
+            'discount' => 'required|numeric',
             'customer_or_vendor' => 'required|max:255',
             'image' => 'image|file|max:1024'
         ]);
@@ -88,19 +129,26 @@ class TransactionController extends Controller
             SerialNumber::create($newSerialNumber);
         }
 
-        $transactionDate = Carbon::now()->toDateTimeString();
-        // @dd($transactionDate);
         $newTransaction = [
             'transaction_date' => now(),
             'transaction_number' => 'BUY-'. mt_rand(1,100000),
             'customer_or_vendor' => $validatedData['customer_or_vendor'],
-            'transaction_type' => 'buy'
+            'transaction_type' => 'Buy'
         ];
         
         Transaction::create($newTransaction);
         
+        $transactionId = Transaction::where('transaction_number', $newTransaction['transaction_number'])->value('id');
+        $newDetailTransaction = [
+            'transaction_id' => $transactionId,
+            'product_id' => $productId,
+            'serial_number' => $validatedData['serial_number'],
+            'price' => $validatedData['price'],
+            'discount' => $validatedData['discount']
+        ];
 
-        return redirect(route('transactions.index'));
+        DetailTransaction::create($newDetailTransaction);
+        return redirect(route('transactions.index'))->with('transaction_status', 'Transaction Success!');
     }
 
     /**
@@ -108,7 +156,10 @@ class TransactionController extends Controller
      */
     public function show(transaction $transaction)
     {
-        return "Halaman transaksi jual/beli";
+        return view('transactions.show', [
+            'transaction' => $transaction,
+            'transaction_detail' => DetailTransaction::firstWhere('transaction_id', $transaction->id)
+        ]);
     }
 
     /**

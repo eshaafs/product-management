@@ -7,6 +7,7 @@
 </div>
 
 <form method="POST" action="" id="buy_form">
+  @csrf
   <div class="row mb-3">
     <label for="product_name" class="col-md-2 col-form-label">Product Name</label>
     <div class="col-md-4">

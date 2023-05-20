@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TransactionController extends Controller
 {
@@ -40,7 +41,23 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // // return $request;
+        // return $request->image->store('test');
+        $validatedData = $request->validate([
+            'product_name' => 'required|max:255',
+            'brand' => ['required', 'max:255'],
+            'model_number' => 'required|max:255|unique:products',
+            'serial_number' => 'required|max:255|unique:serial_numbers',
+            'production_date' => 'required|date',
+            'waranty_start' => 'required|date',
+            'waranty_duration' => 'required|max:255',
+            'price' => 'required|numeric',
+            'image' => 'image'
+        ]);
+
+        @dd($request);
+        $validatedData['image'] = $request->file('image')->store('image');
+        // return redirect('/')->with('buy', 'success');
     }
 
     /**

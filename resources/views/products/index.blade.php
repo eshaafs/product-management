@@ -32,7 +32,7 @@
         <td>{{ Money::IDR($product->price, true) }}</td>
         <td>{{ $stocks->where('product_id', $product->id)->count() }}</td>
         <td>
-          <a href="/products/{{ $product->model_number }}" class='btn btn-info'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
+          <a href="/products/{{ $product->model_number }}" class='badge bg-dark text-decoration-none p-2'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
         </td>
       </tr>
       @endforeach

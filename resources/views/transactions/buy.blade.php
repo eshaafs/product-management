@@ -6,7 +6,17 @@
   <h1 class="h2">Buy New Product</h1>
 </div>
 
-<form method="POST" action="{{ route('transactions.store') }}" enctype="multipart/form-data">
+@if ($errors->any())
+    <div class="alert alert-danger" role="alert">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<form method="POST" action="/transactions" enctype="multipart/form-data">
   @csrf
   <div class="row mb-3">
     <label for="product_name" class="col-md-2 col-form-label">Product Name</label>
@@ -15,9 +25,6 @@
       is-invalid
     @enderror" id="product_name" name='product_name' placeholder="Product Name" value="{{ old('product_name') }}" required>
     </div>
-    @error('product_name')
-    <div class="invalid-feedback col-md-4">{{ $message }}</div>
-    @enderror
   </div>
   <div class="row mb-3">
     <label for="brand" class="col-md-2 col-form-label">Brand</label>
@@ -26,9 +33,6 @@
       is-invalid
     @enderror" id="brand" name='brand' placeholder="Brand" value="{{ old('brand') }}" required>
     </div>
-    @error('brand')
-    <div class="invalid-feedback col-md-4">{{ $message }}</div>
-    @enderror
   </div>
   <div class="row mb-3">
     <label for="model_number" class="col-md-2 col-form-label">Model Number</label>
@@ -37,9 +41,6 @@
       is-invalid
     @enderror" id="model_number" name='model_number' placeholder="Model Number" value="{{ old('model_number') }}" required>
     </div>
-    @error('model_number')
-    <div class="invalid-feedback col-md-4">{{ $message }}</div>
-    @enderror
   </div>
   <div class="row mb-3">
     <label for="serial_number" class="col-md-2 col-form-label">Serial Number</label>
@@ -48,9 +49,6 @@
       is-invalid
     @enderror" id="serial_number" name='serial_number' placeholder="Serial Number" value="{{ old('serial_number') }}" required>
     </div>
-    @error('serial_number')
-    <div class="invalid-feedback col-md-4">{{ $message }}</div>
-    @enderror
   </div>
   <div class="row mb-3">
     <label for="prod_date" class="col-md-2 col-form-label">Production Date</label>
@@ -59,9 +57,6 @@
       is-invalid
     @enderror" id="prod_date" name='prod_date' value="{{ old('prod_date') }}" required>
     </div>
-    @error('prod_date')
-    <div class="invalid-feedback col-md-4">{{ $message }}</div>
-    @enderror
   </div>
   <div class="row mb-3">
     <label for="waranty_start" class="col-md-2 col-form-label">Waranty Start</label>
@@ -70,9 +65,6 @@
       is-invalid
     @enderror" id="waranty_start" name='waranty_start' value="{{ old('waranty_start') }}" required>
     </div>
-    @error('waranty_start')
-    <div class="invalid-feedback col-md-4">{{ $message }}</div>
-    @enderror
   </div>
   <div class="row mb-3">
     <label for="waranty_duration" class="col-md-2 col-form-label">Waranty Duration</label>
@@ -81,14 +73,23 @@
       is-invalid
     @enderror" name='waranty_duration' id="waranty_duration" required>
         <option value="">Waranty Duration</option>
-        <option value="1 Year">1 Year</option>
-        <option value="2 Year">2 Year</option>
-        <option value="3 Year">3 Year</option>
+        <option value="1 Year" @if (old('waranty_duration') == "1 Year")
+          selected>1 Year</option>
+          @else
+          >1 Year</option>
+        @endif
+        <option value="2 Year" @if (old('waranty_duration') == "2 Year")
+          selected>2 Year</option>
+          @else
+          >2 Year</option>
+        @endif
+        <option value="3 Year" @if (old('waranty_duration') == "3 Year")
+          selected>3 Year</option>
+          @else
+          >3 Year</option>
+        @endif
       </select>
     </div>
-    @error('waranty_duration')
-    <div class="invalid-feedback col-md-4">{{ $message }}</div>
-    @enderror
   </div>
   <div class="row mb-3">
     <label for="price" class="col-md-2 col-form-label">Price</label>
@@ -97,9 +98,14 @@
       is-invalid
     @enderror" id="price" name='price' placeholder="Price" value="{{ old('price') }}" required>
     </div>
-    @error('price')
-    <div class="invalid-feedback col-md-4">{{ $message }}</div>
-    @enderror
+  </div>
+  <div class="row mb-3">
+    <label for="customer_or_vendor" class="col-md-2 col-form-label">Customer or Vendor</label>
+    <div class="col-md-4">
+      <input type="text" class="form-control @error('customer_or_vendor')
+      is-invalid
+    @enderror" id="customer_or_vendor" name='customer_or_vendor' placeholder="Customer or Vendor" value="{{ old('customer_or_vendor') }}" required>
+    </div>
   </div>
   <div class="row mb-3">
     <label for="image" class="col-md-2 col-form-label">Product Image</label>
@@ -108,9 +114,6 @@
       is-invalid
     @enderror" type="file" accept=".jpg,.jpeg,.png,.tiff,.gif" id="image" name='image'>
     </div>
-    @error('image')
-    <div class="invalid-feedback col-md-4">{{ $message }}</div>
-    @enderror
   </div>
   <div class="row justify-content-center">
     <div class="col-md-7">
@@ -119,6 +122,6 @@
   </div>
 </form>
 
-<a href="{{ route('transactions.index') }}" class="btn btn-dark mt-3 float-end"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Transaction List</a>
+<a href="/transactions" class="btn btn-dark mt-3 float-end"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Transaction List</a>
 
 @endsection

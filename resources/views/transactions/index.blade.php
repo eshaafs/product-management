@@ -31,7 +31,7 @@
         <td>{{ $transaction->customer_or_vendor }}</td>
         <td>{{ $transaction->transaction_type }}</td>
         <td>
-          <a href="/transactions/{{ $transaction->model_number }}" class='badge bg-info text-decoration-none pb-1'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
+          <a href="/transactions/{{ $transaction->model_number }}" class='badge bg-dark text-decoration-none p-2'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
         </td>
       </tr>
       @endforeach

@@ -10,7 +10,10 @@
 </div>
 <div class="row justify-content-center">
   <div class="col-md-3">
-    <img src="/img/{{ $product->image }}" class="img-thumbnail mx-auto" style="width:250px; height:250px" alt="{{ $product->brand . ' ' . $product->product_name }}">
+    <picture>
+      <source srcset="/img/{{ $product->image }}, /storage/img/{{ $product->image }}" />
+      <img src="/storage/img/{{ $product->image }}" class="img-thumbnail mx-auto" style="width:250px; height:250px" alt="{{ $product->brand . ' ' . $product->product_name }}">
+    </picture>    
   </div>
   <div class="col-md-3 p-0 m-0">
     <table class="table">
@@ -61,7 +64,7 @@
         <td>{{ $stock->waranty_duration }}</td>
         <td>{{ Money::IDR($stock->price, true) }}</td>
         <td>
-          <a href="" class='btn btn-danger'><i class="bi bi-cash-coin"></i> Sell</a>
+          <a href="" class='badge bg-danger text-decoration-none p-2'><i class="bi bi-cash-coin"> Sell</i></a>
         </td>
       </tr>
       @endforeach

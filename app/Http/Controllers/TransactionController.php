@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\Product;
+use App\Models\SerialNumber;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -41,23 +43,64 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        // // return $request;
-        // return $request->image->store('test');
+        // @dd($request);
         $validatedData = $request->validate([
             'product_name' => 'required|max:255',
             'brand' => ['required', 'max:255'],
-            'model_number' => 'required|max:255|unique:products',
+            'model_number' => 'required|max:255',
             'serial_number' => 'required|max:255|unique:serial_numbers',
-            'production_date' => 'required|date',
+            'prod_date' => 'required|date',
             'waranty_start' => 'required|date',
             'waranty_duration' => 'required|max:255',
             'price' => 'required|numeric',
-            'image' => 'image'
+            'customer_or_vendor' => 'required|max:255',
+            'image' => 'image|file|max:1024'
         ]);
 
-        @dd($request);
-        $validatedData['image'] = $request->file('image')->store('image');
-        // return redirect('/')->with('buy', 'success');
+        $name = $validatedData['brand'] . ' ' . $validatedData['product_name'] . '.' . $validatedData['image']->extension();
+        $validatedData['image'] = $request->file('image')->storeAs('img', $name);
+        
+        $newProduct = [
+            'product_name' => $validatedData['product_name'],
+            'brand' => $validatedData['brand'],
+            'model_number' => $validatedData['model_number'],
+            'price' => $validatedData['price'],
+            'image' => $name
+        ];
+
+        
+        $productIsExist = Product::firstWhere('model_number',$validatedData['model_number']);
+        if(!$productIsExist){
+            Product::create($newProduct);
+        }
+
+        $productId = Product::where('model_number', $validatedData['model_number'])->value('id');
+        if($productId){
+            $newSerialNumber = [
+                'product_id' => $productId,
+                'serial_number' => $validatedData['serial_number'],
+                'prod_date' => $validatedData['prod_date'],
+                'waranty_start' => $validatedData['waranty_start'],
+                'waranty_duration' => $validatedData['waranty_duration'],
+                'price' => $validatedData['price'],
+                'used' => false
+            ];
+            SerialNumber::create($newSerialNumber);
+        }
+
+        $transactionDate = Carbon::now()->toDateTimeString();
+        // @dd($transactionDate);
+        $newTransaction = [
+            'transaction_date' => now(),
+            'transaction_number' => 'BUY-'. mt_rand(1,100000),
+            'customer_or_vendor' => $validatedData['customer_or_vendor'],
+            'transaction_type' => 'buy'
+        ];
+        
+        Transaction::create($newTransaction);
+        
+
+        return redirect(route('transactions.index'));
     }
 
     /**

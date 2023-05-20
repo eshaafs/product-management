@@ -1,4 +1,4 @@
-@extends('dashboard.layout.main')
+@extends('layouts.main')
 @php
     use Akaunting\Money\Money;
 @endphp
@@ -6,7 +6,7 @@
 @section('container')
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2">Product Lists</h1>
+  <h1 class="h2">Product List</h1>
 </div>
 
 <div class="table-responsive">
@@ -32,7 +32,7 @@
         <td>{{ Money::IDR($product->price, true) }}</td>
         <td>{{ $stocks->where('product_id', $product->id)->count() }}</td>
         <td>
-          <a href="/dashboard/products/{{ $product->model_number }}" class='badge bg-info text-decoration-none pb-1'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
+          <a href="/products/{{ $product->model_number }}" class='btn btn-info'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
         </td>
       </tr>
       @endforeach

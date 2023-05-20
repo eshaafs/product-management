@@ -8,19 +8,19 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('dashboard/products', 'dashboard/products/*') ? 'active' : ''}}" href="/dashboard/products">
+          <a class="nav-link {{ Request::is('products*') ? 'active' : ''}}" href="/products">
             <span data-feather="layers" class="align-text-bottom"></span>
             Products
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('dashboard/transactions') ? 'active' : ''}}" href="/dashboard/transactions">
+          <a class="nav-link {{ Request::is('transactions*') ? 'active' : ''}}" href="/transactions">
             <span data-feather="file-text" class="align-text-bottom"></span>
             Transactions
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('dashboard/report') ? 'active' : ''}}" href="/dashboard/reports">
+          <a class="nav-link {{ Request::is('report') ? 'active' : ''}}" href="/reports">
             <span data-feather="bar-chart-2" class="align-text-bottom"></span>
             Report
           </a>

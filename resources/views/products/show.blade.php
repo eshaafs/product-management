@@ -1,4 +1,4 @@
-@extends('dashboard.layout.main')
+@extends('layouts.main')
 @php
     use Akaunting\Money\Money;
 @endphp
@@ -8,11 +8,11 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h1 class="h2">{{ $product->brand }} {{ $product->product_name }}</h1>
 </div>
-<div class="row">
-  <div class="col-md-6">
-    <img src="/img/{{ $product->image }}" class="img-thumbnail float-end me-3" style="width:250px; height:250px"alt="{{ $product->brand . ' ' . $product->product_name }}">
-  </div>
+<div class="row justify-content-center">
   <div class="col-md-3">
+    <img src="/img/{{ $product->image }}" class="img-thumbnail mx-auto" style="width:250px; height:250px" alt="{{ $product->brand . ' ' . $product->product_name }}">
+  </div>
+  <div class="col-md-3 p-0 m-0">
     <table class="table">
       <tbody>
         <tr>
@@ -61,7 +61,7 @@
         <td>{{ $stock->waranty_duration }}</td>
         <td>{{ Money::IDR($stock->price, true) }}</td>
         <td>
-          <a href="" class='btn btn-danger'>Sell <span data-feather="send" class="align-text-bottom"></span></span></a>
+          <a href="" class='btn btn-danger'><i class="bi bi-cash-coin"></i> Sell</a>
         </td>
       </tr>
       @endforeach
@@ -69,6 +69,6 @@
   </table>
 </div>
 
-<a href="/dashboard/products" class="btn btn-dark mt-3"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Product Lists</a>
+<a href="/products" class="btn btn-dark mt-3 float-end"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Product List</a>
 
 @endsection

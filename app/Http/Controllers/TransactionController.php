@@ -5,14 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
-class DashboardTransactionController extends Controller
+class TransactionController extends Controller
 {
+    public function buy()
+    {
+        return view('transactions.buy');
+    }
+
+    public function sell()
+    {
+        return view('transactions.sell');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.transactions.index',[
+        return view('transactions.index',[
             'transactions' => Transaction::all()
         ]);
     }
@@ -38,7 +48,7 @@ class DashboardTransactionController extends Controller
      */
     public function show(transaction $transaction)
     {
-        //
+        return "Halaman transaksi jual/beli";
     }
 
     /**
@@ -64,4 +74,5 @@ class DashboardTransactionController extends Controller
     {
         //
     }
+
 }

@@ -1,13 +1,14 @@
-@extends('dashboard.layout.main')
-@php
-    use Akaunting\Money\Money;
-@endphp
+@extends('layouts.main')
 
 @section('container')
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h1 class="h2">Transaction Lists</h1>
 </div>
+
+<a href="/transactions/buy" class="btn btn-success me-2 mb-3"><i class="bi bi-cart3"></i> Buy Product</a>
+<a href="/transactions/sell" class="btn btn-danger mb-3"><i class="bi bi-cash-coin"></i> Sell Product</a>
+
 
 <div class="table-responsive">
   <table class="table table-striped table-sm">
@@ -30,7 +31,7 @@
         <td>{{ $transaction->customer_or_vendor }}</td>
         <td>{{ $transaction->transaction_type }}</td>
         <td>
-          <a href="/dashboard/transactions/{{ $transaction->model_number }}" class='badge bg-info text-decoration-none pb-1'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
+          <a href="/transactions/{{ $transaction->model_number }}" class='badge bg-info text-decoration-none pb-1'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
         </td>
       </tr>
       @endforeach

@@ -6,7 +6,7 @@ use App\Models\Product;
 use App\Models\SerialNumber;
 use Illuminate\Http\Request;
 
-class DashboardProductController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class DashboardProductController extends Controller
     
     public function index()
     {
-        return view('dashboard.products.index', [
+        return view('products.index', [
             'products' => Product::all(),
             'stocks' => SerialNumber::where('used',false)->get()
         ]);
@@ -41,7 +41,7 @@ class DashboardProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('dashboard.products.show', [
+        return view('products.show', [
             'product' => $product,
             'stocks' => SerialNumber::where('used',false)->where('product_id',$product->id)->get()
         ]);

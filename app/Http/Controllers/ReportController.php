@@ -12,7 +12,9 @@ class ReportController extends Controller
 {
     public function index()
     {
-        // $this->authorize('admin');
+        // Authorization using Gate
+        // $this->authorize('super.admin');
+        
         return view('reports.index', [
             'products' => Product::all(),
             'serial_number' => SerialNumber::all(),

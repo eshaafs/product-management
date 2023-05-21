@@ -10,18 +10,6 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    public function buy()
-    {
-        return view('transactions.buy');
-    }
-
-    public function listSellProduct(){
-        return view ('transactions.listSellProduct', [
-            'products' => Product::all(),
-            'stocks' => SerialNumber::where('used',false)->get()
-        ]);
-    }
-
     public function sell(Request $request)
     {
         return view('transactions.sell',[
@@ -76,7 +64,14 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+        if($_GET['type'] === 'buy'){
+            return view('transactions.buy');
+        } else if($_GET['type'] === 'sell'){
+            return view ('transactions.listSellProduct', [
+                'products' => Product::all(),
+                'stocks' => SerialNumber::where('used',false)->get()
+            ]);
+        }
     }
 
     /**

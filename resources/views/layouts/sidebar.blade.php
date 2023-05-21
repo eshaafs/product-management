@@ -20,7 +20,7 @@
           </a>
         </li>
 
-        @can('admin')
+        @can('super.admin')
         <li class="nav-item">
           <a class="nav-link {{ Request::is('reports') ? 'active' : ''}}" href="/reports">
             <span data-feather="bar-chart-2" class="align-text-bottom"></span>

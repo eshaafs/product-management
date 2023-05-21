@@ -13,8 +13,8 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
-<a href="/transactions/buy" class="btn btn-success me-2 mb-3"><i class="bi bi-cart3"></i> Buy Product</a>
-<a href="/transactions/listSellProduct" class="btn btn-danger mb-3"><i class="bi bi-cash-coin"></i> Sell Product</a>
+<a href="/transactions/create?type=buy" class="btn btn-success me-2 mb-3"><i class="bi bi-cart3"></i> Buy Product</a>
+<a href="/transactions/create?type=sell" class="btn btn-danger mb-3"><i class="bi bi-cash-coin"></i> Sell Product</a>
 
 @can('admin')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">

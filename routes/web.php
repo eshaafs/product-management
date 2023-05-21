@@ -27,10 +27,12 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
-Route::resource('/products', ProductController::class)->middleware('auth');
-Route::get('transactions/buy', [TransactionController::class, 'buy'])->middleware('auth');
-Route::get('transactions/sell', [TransactionController::class, 'sell'])->middleware('auth');
-Route::get('transactions/listSellProduct', [TransactionController::class, 'listSellProduct'])->middleware('auth');
+Route::resource('/products', ProductController::class)->middleware('auth')->except([
+    'create', 'store', 'edit', 'update', 'destroy'
+]);
+Route::get('transactions/sell', [TransactionController::class, 'sell'])->middleware('auth')->name('transactions.sell');
 Route::post('transactions/sell', [TransactionController::class, 'sellProduct'])->middleware('auth');
-Route::resource('transactions', TransactionController::class)->middleware('auth');
-Route::get('/reports', [ReportController::class, 'index'])->middleware('IsAdmin');
+Route::resource('transactions', TransactionController::class)->middleware('auth')->except([
+    'edit', 'update', 'destroy'
+]);
+Route::get('/reports', [ReportController::class, 'index'])->middleware('super.admin')->name('reports');

@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        Transaction::factory(30)->create();
 
         $this->call([
             UserSeeder::class,

@@ -1,11 +1,34 @@
 @extends('layouts.main')
+@php
+    use Akaunting\Money\Money;
+@endphp
 
 @section('container')
-
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2">Dashboard</h1>
+{{-- Navbar Report --}}
+<div class="border-bottom pb-3 mt-3">
+  <ul class="nav nav-underline">
+    <li class="nav-item me-3">
+      <h2>Charts</h2>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-dark fw-medium" href="/reports?id=transactions">Transactions</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-dark fw-medium" href="/reports?id=products">Products</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-dark fw-bolder active" href="/reports?id=graph">Graph</a>
+    </li>
+  </ul>
 </div>
-<div class="row mt-3">
+
+{{-- content --}}
+<div class="row d-flex justify-content-center mx-3 border-bottom">
+  <div class="col-lg-12">
+    <center><canvas id="dailyChart" style="width:100%;max-height:400px"></canvas></center>
+  </div>
+</div>
+<div class="row mx-3">
   <div class="col-md-6">
     <canvas id="monthlySales" style="width:100%;max-width:600px"></canvas>
   </div>
@@ -13,7 +36,7 @@
     <canvas id="monthlyExpense" style="width:100%;max-width:600px"></canvas>
   </div>
 </div>
-<div class="row mt-3">
+<div class="row mx-3">
   <div class="col-md-6">
     <canvas id="monthlySoldProduct" style="width:100%;max-width:600px"></canvas>
   </div>
@@ -23,6 +46,44 @@
 </div>
 
 <script>
+  // LINE CHART
+  const xValuesDaily = [
+    <?php 
+    foreach ($daily_sales_date as $date1) {
+      echo $date1 . ', ';
+    }
+    ?>
+  ];
+  const yValuesDaily = [ 
+    <?php 
+    foreach ($daily_sales as $sales) {
+      echo $sales . ', ';
+    }
+    ?>
+  ];
+
+new Chart("dailyChart", {
+  type: "line",
+  data: {
+    labels: xValuesDaily,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yValuesDaily
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+        display: true,
+        text: "Daily Profit May 2023"
+      }
+  }
+});
+
+  // BAR CHART
   // Sales Chart Data
   var xValuesSales = [
     <?php 
@@ -88,7 +149,7 @@
   ];
 
   var barColors = ["red", "green","blue","orange","brown", "yellow", "cyan", "purple", "lightblue", "grey", "black" ,"pink", "darkblue"];
-  
+
   new Chart("monthlySales", {
     type: "bar",
     data: {
@@ -161,6 +222,7 @@
     }
   });
 </script>
-</div>
-
 @endsection
+
+
+  

@@ -3,7 +3,12 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use App\Models\Transaction;
 use Illuminate\Database\Seeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\ProductSeeder;
+use Database\Seeders\SerialNumberSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,10 +23,14 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        Transaction::factory(30)->create();
+
         $this->call([
             UserSeeder::class,
             ProductSeeder::class,
             SerialNumberSeeder::class
         ]);
+
+
     }
 }

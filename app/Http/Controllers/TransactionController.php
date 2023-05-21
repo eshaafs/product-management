@@ -6,6 +6,7 @@ use App\Models\DetailTransaction;
 use App\Models\Transaction;
 use App\Models\Product;
 use App\Models\SerialNumber;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -123,9 +124,9 @@ class TransactionController extends Controller
             ];
             SerialNumber::create($newSerialNumber);
         }
-
+        $date = Carbon::now()->tz('Asia/Jakarta');
         $newTransaction = [
-            'transaction_date' => now(),
+            'transaction_date' => $date,
             'transaction_number' => 'BUY-'. mt_rand(1,100000),
             'customer_or_vendor' => $validatedData['customer_or_vendor'],
             'transaction_type' => 'Buy'
@@ -149,11 +150,12 @@ class TransactionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(transaction $transaction)
+    public function show(transaction $transaction, Request $request)
     {
         return view('transactions.show', [
             'transaction' => $transaction,
-            'transaction_detail' => DetailTransaction::firstWhere('transaction_id', $transaction->id)
+            'transaction_detail' => DetailTransaction::firstWhere('transaction_id', $transaction->id),
+            'back' => $request->back
         ]);
     }
 

@@ -39,7 +39,11 @@
   </div>
 </div>
 
+@if ($product_status === 'sold')
+<h4 class="mt-5 mb-3 pb-2 border-bottom">Sold List</h4>
+@else
 <h4 class="mt-5 mb-3 pb-2 border-bottom">Stock List</h4>
+@endif
 
 <div class="table-responsive">
   <table class="table table-striped table-sm">
@@ -72,6 +76,11 @@
   </table>
 </div>
 
-<a href="/products" class="btn btn-dark position-absolute" style="bottom: 5%; right: 5%"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Product List</a>
+
+@if ($back==='products-report')
+<a href="/reports?id=products" class="btn btn-dark position-absolute" style="bottom: 5%; right: 5%"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Products Report</a>
+@else 
+<a href="/products" class="btn btn-dark position-absolute" style="bottom: 5%; right: 5%"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Products List</a>
+@endif
 
 @endsection

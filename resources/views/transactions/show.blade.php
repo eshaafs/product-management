@@ -50,13 +50,13 @@
         </tr>
         <tr>
           <td scope="col">6</td>
-          <td scope="col">Serial Number</td>
-          <td scope="col">{{ $transaction_detail->serial_number }}</td>
+          <td scope="col">Brand</td>
+          <td scope="col">{{ $transaction_detail->product->brand }}</td>
         </tr>
         <tr>
           <td scope="col">7</td>
-          <td scope="col">Brand</td>
-          <td scope="col">{{ $transaction_detail->product->brand }}</td>
+          <td scope="col">Serial Number</td>
+          <td scope="col">{{ $transaction_detail->serial_number }}</td>
         </tr>
         <tr>
           <td scope="col">8</td>
@@ -73,5 +73,10 @@
   </div>
 </div>
 
-<a href="/transactions" class="btn btn-dark position-absolute" style="bottom: 5%; right: 5%"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Transaction List</a>
+@if ($back==='transaction-report')
+  <a href="/reports?id=transactions" class="btn btn-dark position-absolute" style="bottom: 5%; right: 5%"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Transactions Report</a>
+@else
+  <a href="/transactions" class="btn btn-dark position-absolute" style="bottom: 5%; right: 5%"><span data-feather="arrow-left" class="align-text-bottom"></span> Return to Transactions List</a> 
+@endif
+
 @endsection

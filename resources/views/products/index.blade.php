@@ -23,10 +23,13 @@
       </tr>
     </thead>
     <tbody>
+      @php
+        $i=1;
+      @endphp
       @foreach ($products as $product)
         @if ($stocks->where('product_id', $product->id)->count() > 0)
           <tr>
-            <td>{{ $loop->iteration }}</td>
+            <td>{{ $i }}</td>
             <td>{{ $product->product_name }}</td>
             <td>{{ $product->brand }}</td>
             <td>{{ $product->model_number }}</td>
@@ -36,6 +39,9 @@
               <a href="/products/{{ $product->model_number }}" class='badge bg-dark text-decoration-none p-2'><span data-feather="eye" class="align-text-bottom"></span> Show Detail</a>
             </td>
           </tr>
+          @php
+            $i++;
+          @endphp
         @endif
       @endforeach
     </tbody>

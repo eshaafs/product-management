@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Transaction extends Model
 {
@@ -17,10 +18,10 @@ class Transaction extends Model
         'customer_or_vendor',
         'transaction_type'
     ];
-
-    public function product(): HasMany
+    
+    public function transaction_detail() : HasOne
     {
-        return $this->hasMany(DetailTransaction::class);
+        return $this->hasOne(DetailTransaction::class);
     }
 
     public function getRouteKeyName(): string

@@ -39,11 +39,25 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Product $product, Request $request)
     {
+        $back = $request->back;
+        $product_status = $request->product_status;
+
+        if($product_status == "sold"){
+            return view('products.show', [
+                'product' => $product,
+                'stocks' => SerialNumber::where('used',true)->where('product_id',$product->id)->get(),
+                'back' => $back,
+                'product_status' => $product_status 
+            ]);
+        }
+
         return view('products.show', [
             'product' => $product,
-            'stocks' => SerialNumber::where('used',false)->where('product_id',$product->id)->get()
+            'stocks' => SerialNumber::where('used',false)->where('product_id',$product->id)->get(),
+            'back' => $back,
+            'product_status' => $product_status 
         ]);
     }
 
